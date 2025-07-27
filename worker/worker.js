@@ -64,5 +64,14 @@ if (request.url.match(/\.(js|css|png|jpg|webp|gif)$/)) {
 // 主处理函数
 export default async function (context) {
   const { request, env } = context;
-  return handleRequest(request, env.TARGET_URL);
+
+  try {
+    return await handleRequest(request, env.TARGET_URL);
+  } catch (error) {
+    // 回退到静态页
+    return new Response(fallbackHTML, {
+      status: 502,
+      headers: { 'Content-Type': 'text/html' }
+    });
+  }
 }
