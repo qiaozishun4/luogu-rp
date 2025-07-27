@@ -1,0 +1,11 @@
+name = "luogu-reverse-proxy"
+main = "./worker/worker.js"
+compatibility_date = "2025-07-27"
+
+[build]
+command = "npm run build"
+publish = "public"
+
+[[routes]]
+pattern = "luogu.com/*"
+zone_id = "your-zone-id"
