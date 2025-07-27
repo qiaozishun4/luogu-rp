@@ -39,6 +39,8 @@ async function handleRequest(request, targetUrl) {
   // 在 handleRequest 函数中添加
   if (response.headers.get('Content-Type')?.includes('text/html')) {
     const body = await response.text();
+    const canonicalTag = `<link rel="canonical" href="${request.url}" />`;
+    rewrittenBody = rewrittenBody.replace('</head>', `${canonicalTag}</head>`);
     const rewrittenBody = body.replace(
       new RegExp(`https?://${new URL(targetUrl).hostname}`, 'g'),
       new URL(request.url).origin
