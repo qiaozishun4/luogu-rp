@@ -1,4 +1,4 @@
-import handler from '../../worker/worker.js'
+import handler from '/worker/worker.js'
 
 export const onRequest = (context) => {
   // 特殊处理根路径请求
