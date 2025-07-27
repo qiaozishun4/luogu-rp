@@ -36,6 +36,20 @@ async function handleRequest(request, targetUrl) {
       response.headers.set('Location', fixedUrl);
     }
   }
+  // 在 handleRequest 函数中添加
+  if (response.headers.get('Content-Type')?.includes('text/html')) {
+    const body = await response.text();
+    const rewrittenBody = body.replace(
+      new RegExp(`https?://${new URL(targetUrl).hostname}`, 'g'),
+      new URL(request.url).origin
+    );
+    return new Response(rewrittenBody, response);
+  }
+
+  // 在 worker.js 中添加静态资源缓存
+if (request.url.match(/\.(js|css|png|jpg|webp|gif)$/)) {
+  response.headers.set('Cache-Control', 'public, max-age=31536000');
+}
 
   // 7. 返回响应
   return new Response(response.body, {
@@ -43,6 +57,8 @@ async function handleRequest(request, targetUrl) {
     statusText: response.statusText,
     headers: response.headers
   });
+  
+
 }
 
 // 主处理函数
