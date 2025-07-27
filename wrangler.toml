@@ -9,7 +9,3 @@ publish = "public"
 [vars]
 TARGET_URL = "https://luogu.com"   # 替换为实际目标网站
 SITE_URL = "https://luogu.qpoem.org.cn"               # 替换为代理站点域名
-
-[[d1_databases]]
-binding = "DB"
-database_name = "redirect-cache"
